@@ -27,9 +27,9 @@ assert_reset() {
 }
 
 assert_end() {
-    # assert_end [suite]
+    # assert_end [suite ..]
     test_endtime="$(date +%s.%N)"
-    tests="$tests_ran ${1:+$1 }tests"
+    tests="$tests_ran ${*:+$* }tests"
     [ -n "$DISCOVERONLY" ] && echo "collected $tests." && return
     [ -n "$DEBUG" ] && echo
     report_time="$(bc <<< "$test_endtime - $test_starttime" \
