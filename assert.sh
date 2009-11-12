@@ -32,14 +32,13 @@ assert_end() {
     tests="$tests_ran ${1:+$1 }tests"
     [ -n "$DISCOVERONLY" ] && echo "collected $tests." && return
     [ -n "$DEBUG" ] && echo
-    report_time="in `echo "$test_endtime - $test_starttime" \
-        | bc \
-        | sed -e 's/\.\([0-9]\{0,3\}\)[0-9]*/.\1/' -e 's/^\./0./'`s"
+    report_time="$(bc <<< "$test_endtime - $test_starttime" \
+        | sed -e 's/\.\([0-9]\{0,3\}\)[0-9]*/.\1s/' -e 's/^\./0./')"
     if [ "$tests_failed" -eq 0 ]; then
-        echo "all $tests passed $report_time."
+        echo "all $tests passed in $report_time."
     else
         echo "$test_errors"
-        echo "$tests_failed of $tests failed $report_time."
+        echo "$tests_failed of $tests failed in $report_time."
     fi
     assert_reset
 }
