@@ -48,31 +48,31 @@ assert_end() {
 assert() {
     # assert <command> <expected stdout> [stdin] [expected status code]
     (( tests_ran++ ))
-    [ -n "$DISCOVERONLY" ] && return
+    [[ -n "$DISCOVERONLY" ]] && return
     expected="$(echo -e "$2")"
     result="$($1 <<< $3)"
     status=$?
-    notice="test #$tests_ran \"$1${3:+ <<< $3}\" failed:"
-    if [ -n "$4" ] && [ "$status" -ne "$4" ]; then
-        test_errors[$tests_failed]=$(echo -e "$notice\
-            \n\tprogram terminated with code $status instead of $4")
-    elif [ "x$result" != "x$expected" ]; then
+    if [[ -n "$4" && "$status" -ne "$4" ]]; then
+        failure="program terminated with code $status instead of $4"
+    elif [[ "x$result" != "x$expected" ]]; then
         result=$(xargs -I{} echo -n {}\\n <<< "$result" | sed 's/\\n$/\n/')
-        [ -z "$result" ] && result=nothing
-        test_errors[$tests_failed]=$(echo -e "$notice\
-            \n\texpected \"$2\"\n\tgot $result")
+        [[ -z "$result" ]] && result=nothing
+        failure="expected \"$2\"\n\tgot $result"
     else
-        [ -n "$DEBUG" ] && echo -n .
+        [[ -n "$DEBUG" ]] && echo -n .
         (( tests_passed++ ))
         return
     fi
-    [ -n "$DEBUG" ] && echo -n X
-    (( tests_failed++ ))
-    if [ -n "$STOP" ]; then
-        [ -n "$DEBUG" ] && echo
-        echo "$test_errors"
+    [[ -n "$DEBUG" ]] && echo -n X
+    printf -v report "test #$tests_ran \"$1${3:+ <<< $3}\" failed:\n\t$failure"
+    echo "test $tests_ran FAILED!"
+    if [[ -n "$STOP" ]]; then
+        [[ -n "$DEBUG" ]] && echo
+        echo "$report"
         exit 1
     fi
+    test_errors[$tests_failed]="$report"
+    (( tests_failed++ ))
 }
 
 _assert_reset
