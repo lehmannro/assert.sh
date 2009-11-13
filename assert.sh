@@ -22,22 +22,22 @@ _assert_reset() {
     tests_ran=0 # tests_passed + tests_failed
     tests_passed=0
     tests_failed=0
-    declare -a test_errors
-    test_starttime="$(date +%s.%N)" # seconds_since_epoch.nanoseconds
+    declare -a tests_errors
+    tests_starttime="$(date +%s.%N)" # seconds_since_epoch.nanoseconds
 }
 
 assert_end() {
     # assert_end [suite ..]
-    test_endtime="$(date +%s.%N)"
+    tests_endtime="$(date +%s.%N)"
     tests="$tests_ran ${*:+$* }tests"
     [[ -n "$DISCOVERONLY" ]] && echo "collected $tests." && return
     [[ -n "$DEBUG" ]] && echo
-    report_time="$(bc <<< "$test_endtime - $test_starttime" \
+    report_time="$(bc <<< "$tests_endtime - $tests_starttime" \
         | sed -e 's/\.\([0-9]\{0,3\}\)[0-9]*/.\1s/' -e 's/^\./0./')"
     if [[ "$tests_failed" -eq 0 ]]; then
         echo "all $tests passed in $report_time."
     else
-        echo "$test_errors"
+        echo "$tests_errors"
         echo "$tests_failed of $tests failed in $report_time."
     fi
     tests_failed_previous=$tests_failed
@@ -65,13 +65,12 @@ assert() {
     fi
     [[ -n "$DEBUG" ]] && echo -n X
     printf -v report "test #$tests_ran \"$1${3:+ <<< $3}\" failed:\n\t$failure"
-    echo "test $tests_ran FAILED!"
     if [[ -n "$STOP" ]]; then
         [[ -n "$DEBUG" ]] && echo
         echo "$report"
         exit 1
     fi
-    test_errors[$tests_failed]="$report"
+    tests_errors[$tests_failed]="$report"
     (( tests_failed++ ))
 }
 
