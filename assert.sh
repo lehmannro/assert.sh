@@ -40,7 +40,9 @@ assert_end() {
         echo "$test_errors"
         echo "$tests_failed of $tests failed in $report_time."
     fi
+    tests_failed_previous=$tests_failed
     _assert_reset
+    return $tests_failed_previous
 }
 
 assert() {
