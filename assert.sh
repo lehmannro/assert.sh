@@ -18,12 +18,12 @@ for arg in $args; do
     esac
 done
 
-assert_reset() {
+_assert_reset() {
+    tests_ran=0 # tests_passed + tests_failed
     tests_passed=0
     tests_failed=0
-    tests_ran=0
     declare -a test_errors
-    test_starttime="$(date +%s.%N)"
+    test_starttime="$(date +%s.%N)" # seconds_since_epoch.nanoseconds
 }
 
 assert_end() {
@@ -40,7 +40,7 @@ assert_end() {
         echo "$test_errors"
         echo "$tests_failed of $tests failed in $report_time."
     fi
-    assert_reset
+    _assert_reset
 }
 
 assert() {
@@ -73,4 +73,4 @@ assert() {
     fi
 }
 
-assert_reset
+_assert_reset
