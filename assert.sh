@@ -30,11 +30,11 @@ assert_end() {
     # assert_end [suite ..]
     test_endtime="$(date +%s.%N)"
     tests="$tests_ran ${*:+$* }tests"
-    [ -n "$DISCOVERONLY" ] && echo "collected $tests." && return
-    [ -n "$DEBUG" ] && echo
+    [[ -n "$DISCOVERONLY" ]] && echo "collected $tests." && return
+    [[ -n "$DEBUG" ]] && echo
     report_time="$(bc <<< "$test_endtime - $test_starttime" \
         | sed -e 's/\.\([0-9]\{0,3\}\)[0-9]*/.\1s/' -e 's/^\./0./')"
-    if [ "$tests_failed" -eq 0 ]; then
+    if [[ "$tests_failed" -eq 0 ]]; then
         echo "all $tests passed in $report_time."
     else
         echo "$test_errors"
