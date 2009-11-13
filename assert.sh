@@ -37,7 +37,7 @@ assert_end() {
     if [[ "$tests_failed" -eq 0 ]]; then
         echo "all $tests passed in $report_time."
     else
-        echo "$tests_errors"
+        for error in "${tests_errors[@]}"; do echo "$error"; done
         echo "$tests_failed of $tests failed in $report_time."
     fi
     tests_failed_previous=$tests_failed
