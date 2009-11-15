@@ -66,33 +66,50 @@ assert_end() {
 }
 
 assert() {
-    # assert <command> <expected stdout> [stdin] [expected status code]
+    # assert <command> <expected stdout> [stdin]
     (( tests_ran++ ))
     [[ -n "$DISCOVERONLY" ]] && return
     printf -v expected "x$2" # required to overwrite older results
-    result="$($1 <<< $3)"
-    status=$?
-    if [[ -n "$4" && "$status" -ne "$4" ]]; then
-        failure="program terminated with code $status instead of $4"
+    result="$(eval $1 <<< $3)"
     # Note: $expected is already decorated
-    elif [[ "x$result" != "$expected" ]]; then
-        result="$(sed -e :a -e '$!N;s/\n/\\n/;ta' <<< "$result")"
-        [[ -z "$result" ]] && result="nothing" || result="\"$result\""
-        [[ -z "$2" ]] && expected="nothing" || expected="\"$2\""
-        failure="expected $expected${_indent}got $result"
-    else
+    if [[ "x$result" == "$expected" ]]; then
         [[ -n "$DEBUG" ]] && echo -n .
         return
     fi
+    result="$(sed -e :a -e '$!N;s/\n/\\n/;ta' <<< "$result")"
+    [[ -z "$result" ]] && result="nothing" || result="\"$result\""
+    [[ -z "$2" ]] && expected="nothing" || expected="\"$2\""
+    failure="expected $expected${_indent}got $result"
     [[ -n "$DEBUG" ]] && echo -n X
     report="test #$tests_ran \"$1${3:+ <<< $3}\" failed:${_indent}$failure"
+    tests_errors[$tests_failed]="$report"
+    (( tests_failed++ ))
     if [[ -n "$STOP" ]]; then
         [[ -n "$DEBUG" ]] && echo
         echo "$report"
         exit 1
     fi
+}
+
+assert_raises() {
+    # assert_raises <command> <expected code> [stdin]
+    (( tests_ran++ ))
+    [[ -n "$DISCOVERONLY" ]] && return
+    ($1 <<< $3)
+    status=$?
+    if [[ "$status" -eq "$2" ]]; then
+        [[ -n "$DEBUG" ]] && echo -n .
+        return
+    fi
+    failure="program terminated with code $status instead of $4"
+    report="test #$tests_ran \"$1${3:+ <<< $3}\" failed:${_indent}$failure"
     tests_errors[$tests_failed]="$report"
     (( tests_failed++ ))
+    if [[ -n "$STOP" ]]; then
+        [[ -n "$DEBUG" ]] && echo
+        echo "$report"
+        exit 1
+    fi
 }
 
 _assert_reset
