@@ -33,8 +33,7 @@ done
 printf -v _indent "\n\t" # local format helper
 
 _assert_reset() {
-    tests_ran=0 # tests_passed + tests_failed
-    tests_passed=0
+    tests_ran=0
     tests_failed=0
     declare -a tests_errors
     tests_starttime="$(date +%s.%N)" # seconds_since_epoch.nanoseconds
@@ -76,7 +75,6 @@ assert() {
         failure="expected $expected${_indent}got $result"
     else
         [[ -n "$DEBUG" ]] && echo -n .
-        (( tests_passed++ ))
         return
     fi
     [[ -n "$DEBUG" ]] && echo -n X
