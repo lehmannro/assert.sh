@@ -95,7 +95,7 @@ assert_raises() {
     # assert_raises <command> <expected code> [stdin]
     (( tests_ran++ ))
     [[ -n "$DISCOVERONLY" ]] && return
-    ($1 <<< $3)
+    ($1 <<< $3) > /dev/null
     status=$?
     expected=${2:-0}
     if [[ "$status" -eq "$expected" ]]; then
