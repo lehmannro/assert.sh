@@ -76,11 +76,11 @@ assert() {
         [[ -n "$DEBUG" ]] && echo -n .
         return
     fi
+    [[ -n "$DEBUG" ]] && echo -n X
     result="$(sed -e :a -e '$!N;s/\n/\\n/;ta' <<< "$result")"
     [[ -z "$result" ]] && result="nothing" || result="\"$result\""
     [[ -z "$2" ]] && expected="nothing" || expected="\"$2\""
     failure="expected $expected${_indent}got $result"
-    [[ -n "$DEBUG" ]] && echo -n X
     report="test #$tests_ran \"$1${3:+ <<< $3}\" failed:${_indent}$failure"
     tests_errors[$tests_failed]="$report"
     (( tests_failed++ ))
@@ -102,7 +102,8 @@ assert_raises() {
         [[ -n "$DEBUG" ]] && echo -n .
         return
     fi
-    failure="program terminated with code $status instead of $4"
+    [[ -n "$DEBUG" ]] && echo -n X
+    failure="program terminated with code $status instead of $expected"
     report="test #$tests_ran \"$1${3:+ <<< $3}\" failed:${_indent}$failure"
     tests_errors[$tests_failed]="$report"
     (( tests_failed++ ))
