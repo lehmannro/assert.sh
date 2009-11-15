@@ -30,6 +30,8 @@ EOF
     esac
 done
 
+printf -v _indent "\n\t" # local format helper
+
 _assert_reset() {
     tests_ran=0 # tests_passed + tests_failed
     tests_passed=0
@@ -61,22 +63,24 @@ assert() {
     # assert <command> <expected stdout> [stdin] [expected status code]
     (( tests_ran++ ))
     [[ -n "$DISCOVERONLY" ]] && return
-    expected="$(echo -e "$2")"
+    printf -v expected "x$2" # required to overwrite older results
     result="$($1 <<< $3)"
     status=$?
     if [[ -n "$4" && "$status" -ne "$4" ]]; then
         failure="program terminated with code $status instead of $4"
-    elif [[ "x$result" != "x$expected" ]]; then
-        result=$(xargs -I{} echo -n {}\\n <<< "$result" | sed 's/\\n$/\n/')
-        [[ -z "$result" ]] && result=nothing
-        failure="expected \"$2\"\n\tgot $result"
+    # Note: $expected is already decorated
+    elif [[ "x$result" != "$expected" ]]; then
+        result="$(sed -e :a -e '$!N;s/\n/\\n/;ta' <<< "$result")"
+        [[ -z "$result" ]] && result="nothing" || result="\"$result\""
+        [[ -z "$2" ]] && expected="nothing" || expected="\"$2\""
+        failure="expected $expected${_indent}got $result"
     else
         [[ -n "$DEBUG" ]] && echo -n .
         (( tests_passed++ ))
         return
     fi
     [[ -n "$DEBUG" ]] && echo -n X
-    printf -v report "test #$tests_ran \"$1${3:+ <<< $3}\" failed:\n\t$failure"
+    report="test #$tests_ran \"$1${3:+ <<< $3}\" failed:${_indent}$failure"
     if [[ -n "$STOP" ]]; then
         [[ -n "$DEBUG" ]] && echo
         echo "$report"
