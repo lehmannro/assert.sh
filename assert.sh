@@ -97,7 +97,8 @@ assert_raises() {
     [[ -n "$DISCOVERONLY" ]] && return
     ($1 <<< $3)
     status=$?
-    if [[ "$status" -eq "$2" ]]; then
+    expected=${2:-0}
+    if [[ "$status" -eq "$expected" ]]; then
         [[ -n "$DEBUG" ]] && echo -n .
         return
     fi
