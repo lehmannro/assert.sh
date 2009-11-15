@@ -47,7 +47,7 @@ assert_end() {
     # assert_end [suite ..]
     tests_endtime="$(date +%s.%N)"
     tests="$tests_ran ${*:+$* }tests"
-    [[ -n "$DISCOVERONLY" ]] && echo "collected $tests." && return
+    [[ -n "$DISCOVERONLY" ]] && echo "collected $tests." && _assert_reset && return
     [[ -n "$DEBUG" ]] && echo
     [[ -z "$INVARIANT" ]] && report_time=" in $(bc \
         <<< "$tests_endtime - $tests_starttime" \
