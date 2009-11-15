@@ -1,7 +1,7 @@
 #!/bin/bash
 # Copyright (C) 2009 Robert Lehmann
 
-args="$(getopt -n "$0" -l verbose,help,stop,discover vhxd $*)"
+args="$(getopt -n "$0" -l verbose,help,stop,discover vhxd $*)" || exit -1
 for arg in $args; do
     case "$arg" in
         -h|--help)
