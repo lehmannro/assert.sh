@@ -4,10 +4,22 @@
 args="$(getopt -n "$0" -l verbose,help,stop,discover vhxd $*)" || exit -1
 for arg in $args; do
     case "$arg" in
-        -h|--help)
+        -h)
             echo "usage: $0 [-vxd] [--verbose] [--stop] [--discover]"
-            echo "       `sed 's/./ /g' <<< "$0"` [-h | --help]"
-            echo "       language-agnostic unit tests for subprocesses"
+            echo "       `sed 's/./ /g' <<< "$0"` [-h] [--help]"
+            exit 0;;
+        --help)
+            cat <<EOF
+Usage: $0 [options]
+Language-agnostic unit tests for subprocesses.
+
+Options:
+  -v, --verbose    generate output for every individual test
+  -x, --stop       stop running tests after the first failure
+  -d, --discover   collect test suites only, don't run any tests
+  -h               show brief usage information and exit
+  --help           show this help message and exit
+EOF
             exit 0;;
         -v|--verbose)
             DEBUG=1;;
