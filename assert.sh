@@ -1,12 +1,13 @@
 #!/bin/bash
 # Copyright (C) 2009 Robert Lehmann
 
-args="$(getopt -n "$0" -l verbose,help,stop,discover vhxd $*)" || exit -1
+args="$(getopt -n "$0" -l verbose,help,stop,discover,invariant vhxdi $*)" \
+|| exit -1
 for arg in $args; do
     case "$arg" in
         -h)
-            echo "usage: $0 [-vxd] [--verbose] [--stop] [--discover]"
-            echo "       `sed 's/./ /g' <<< "$0"` [-h] [--help]"
+            echo "$0 [-vxid] [--verbose] [--stop] [--invariant] [--discover]"
+            echo "`sed 's/./ /g' <<< "$0"` [-h] [--help]"
             exit 0;;
         --help)
             cat <<EOF
@@ -16,6 +17,7 @@ Language-agnostic unit tests for subprocesses.
 Options:
   -v, --verbose    generate output for every individual test
   -x, --stop       stop running tests after the first failure
+  -i, --invariant  do not time suites to remain invariant during runs
   -d, --discover   collect test suites only, don't run any tests
   -h               show brief usage information and exit
   --help           show this help message and exit
@@ -25,6 +27,8 @@ EOF
             DEBUG=1;;
         -x|--stop)
             STOP=1;;
+        -i|--invariant)
+            INVARIANT=1;;
         -d|--discover)
             DISCOVERONLY=1;;
     esac
@@ -45,13 +49,16 @@ assert_end() {
     tests="$tests_ran ${*:+$* }tests"
     [[ -n "$DISCOVERONLY" ]] && echo "collected $tests." && return
     [[ -n "$DEBUG" ]] && echo
-    report_time="$(bc <<< "$tests_endtime - $tests_starttime" \
-        | sed -e 's/\.\([0-9]\{0,3\}\)[0-9]*/.\1s/' -e 's/^\./0./')"
+    [[ -z "$INVARIANT" ]] && report_time=" in $(bc \
+        <<< "$tests_endtime - $tests_starttime" \
+        | sed -e 's/\.\([0-9]\{0,3\}\)[0-9]*/.\1/' -e 's/^\./0./')s" \
+        || report_time=
+
     if [[ "$tests_failed" -eq 0 ]]; then
-        echo "all $tests passed in $report_time."
+        echo "all $tests passed$report_time."
     else
         for error in "${tests_errors[@]}"; do echo "$error"; done
-        echo "$tests_failed of $tests failed in $report_time."
+        echo "$tests_failed of $tests failed$report_time."
     fi
     tests_failed_previous=$tests_failed
     _assert_reset
