@@ -53,7 +53,7 @@ printf -v _indent "\n\t" # local format helper
 _assert_reset() {
     tests_ran=0
     tests_failed=0
-    declare -a tests_errors
+    tests_errors=()
     tests_starttime="$(date +%s.%N)" # seconds_since_epoch.nanoseconds
 }
 
