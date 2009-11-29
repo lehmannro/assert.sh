@@ -42,4 +42,14 @@ assert_raises "_clean INVARIANT=;
 assert_end | egrep 'all 0 tests passed in [0-9].[0-9]{3}s'"
 # assert_end exit code is the number of failures
 assert_raises "_clean; assert_raises false; assert_raises false; assert_end" 2
+assert "_clean;
+assert_raises false; assert_raises false; assert_end;
+assert_raises false; assert_end" 'test #1 "false" failed:
+\tprogram terminated with code 1 instead of 0
+test #2 "false" failed:
+\tprogram terminated with code 1 instead of 0
+2 of 2 tests failed.
+test #1 "false" failed:
+\tprogram terminated with code 1 instead of 0
+1 of 1 tests failed.'
 assert_end output
