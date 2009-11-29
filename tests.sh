@@ -42,6 +42,30 @@ assert_raises "_clean INVARIANT=;
 assert_end | egrep 'all 0 tests passed in [0-9].[0-9]{3}s'"
 # assert_end exit code is the number of failures
 assert_raises "_clean; assert_raises false; assert_raises false; assert_end" 2
+assert_end output
+
+# commit: fixed output to report all errors, not just the first
+assert "_clean;
+assert_raises false; assert_raises false;
+assert_end" 'test #1 "false" failed:
+\tprogram terminated with code 1 instead of 0
+test #2 "false" failed:
+\tprogram terminated with code 1 instead of 0
+2 of 2 tests failed.'
+# commit: added default value for assert_raises
+assert_raises "_clean; assert_raises true; assert_end" 0
+# commit: fixed verbose failure reports in assert_raises
+assert "_clean DEBUG=1; assert_raises false; assert_end" 'X
+test #1 "false" failed:
+\tprogram terminated with code 1 instead of 0
+1 of 1 tests failed.'
+# commit: redirected assert_raises output
+assert "_clean; assert_raises 'echo 1'; assert_end" "all 1 tests passed."
+# commit: fixed --discover to reset properly
+assert "_clean DISCOVERONLY=1;
+assert 1; assert 1; assert_end;
+assert 1; assert_end;" "collected 2 tests.\ncollected 1 tests."
+# commit: stopped errors from leaking into other test suites
 assert "_clean;
 assert_raises false; assert_raises false; assert_end;
 assert_raises false; assert_end" 'test #1 "false" failed:
@@ -52,4 +76,4 @@ test #2 "false" failed:
 test #1 "false" failed:
 \tprogram terminated with code 1 instead of 0
 1 of 1 tests failed.'
-assert_end output
+assert_end regression
