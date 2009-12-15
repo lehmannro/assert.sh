@@ -2,6 +2,8 @@
 # assert.sh - bash unit testing framework
 # Copyright (C) 2009 Robert Lehmann
 #
+# http://github.com/lehmannro/assert.sh
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published
 # by the Free Software Foundation, either version 3 of the License, or
@@ -83,7 +85,7 @@ assert() {
     # assert <command> <expected stdout> [stdin]
     (( tests_ran++ ))
     [[ -n "$DISCOVERONLY" ]] && return
-    printf -v expected "x$2" # required to overwrite older results
+    printf -v expected "x$2" # x required to overwrite older results
     result="$(eval $1 <<< $3)"
     # Note: $expected is already decorated
     if [[ "x$result" == "$expected" ]]; then
