@@ -1,5 +1,5 @@
 #!/bin/bash
-# assert.sh - bash unit testing framework
+# assert.sh 1.0 - bash unit testing framework
 # Copyright (C) 2009 Robert Lehmann
 #
 # http://github.com/lehmannro/assert.sh
