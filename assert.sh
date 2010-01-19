@@ -17,6 +17,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+DISCOVERONLY= DEBUG= STOP= INVARIANT=
+
 args="$(getopt -n "$0" -l verbose,help,stop,discover,invariant vhxdi $*)" \
 || exit -1
 for arg in $args; do
@@ -85,8 +87,9 @@ assert() {
     # assert <command> <expected stdout> [stdin]
     (( tests_ran++ ))
     [[ -n "$DISCOVERONLY" ]] && return
-    printf -v expected "x$2" # x required to overwrite older results
-    result="$(eval $1 <<< $3)"
+    # printf required for formatting
+    printf -v expected "x${2:-}" # x required to overwrite older results
+    result="$(eval $1 <<< ${3:-})"
     # Note: $expected is already decorated
     if [[ "x$result" == "$expected" ]]; then
         [[ -n "$DEBUG" ]] && echo -n .
@@ -111,7 +114,7 @@ assert_raises() {
     # assert_raises <command> <expected code> [stdin]
     (( tests_ran++ ))
     [[ -n "$DISCOVERONLY" ]] && return
-    (eval $1 <<< $3) > /dev/null
+    (eval $1 <<< ${3:-}) > /dev/null
     status=$?
     expected=${2:-0}
     if [[ "$status" -eq "$expected" ]]; then

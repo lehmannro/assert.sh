@@ -77,4 +77,7 @@ test #2 "false" failed:
 test #1 "false" failed:
 \tprogram terminated with code 1 instead of 0
 1 of 1 tests failed.'
+# issue 1: assert.sh: line 87: DISCOVERONLY: unbound variable
+assert "_clean; set -u; assert_raises true; assert true; assert_end" \
+"all 2 tests passed."
 assert_end regression
