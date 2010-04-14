@@ -115,6 +115,12 @@ variable          corresponding option
 ``$DISCOVERONLY`` ``--discover-only``
 ================= ====================
 
+Changelog
+=========
+
+1.0.1
+  * Added support for ``set -u`` environments (closes `#1
+    <http://github.com/lehmannro/assert.sh/issues/#issue/1>`_).
 
 Related projects
 ================
