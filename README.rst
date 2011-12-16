@@ -146,5 +146,5 @@ __ http://code.google.com/p/shunit2/
   style API.  Unfortunately it's only of draft quality and decouples the test
   runner from analysis, which does not allow for *assert.sh* features such as
   ``--collect-only`` and ``--skip``.
-  
+
 __ http://testanything.org/wiki/index.php/Tap-functions
