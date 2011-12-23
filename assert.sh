@@ -17,7 +17,10 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-DISCOVERONLY= DEBUG= STOP= INVARIANT=
+export DISCOVERONLY=${DISCOVERONLY:-}
+export DEBUG=${DEBUG:-}
+export STOP=${STOP:-}
+export INVARIANT=${INVARIANT:-}
 
 args="$(getopt -n "$0" -l verbose,help,stop,discover,invariant vhxdi $*)" \
 || exit -1
