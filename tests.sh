@@ -43,6 +43,12 @@ assert_raises "_clean INVARIANT=;
 assert_end | egrep 'all 0 tests passed in [0-9].[0-9]{3}s'"
 # assert_end exit code is the number of failures
 assert_raises "_clean; assert_raises false; assert_raises false; assert_end" 2
+# stderr should NOT leak if ignored
+assert "_clean; assert less" ""
+# stderr should be redirectable though
+assert '_clean; assert "less 2>&1" "Missing filename (\"less --help\" for help)"'
+# bash failures behave just like stderr
+assert "_clean; assert ___invalid" ""
 # tests can be included and settings are not overridden
 # (ie. we don't need to invoke the inner suite with our options)
 assert "bash -c '. assert.sh; assert_raises true; assert_end outer; bash -c \". assert.sh; assert_raises true; assert_end inner\"' tests --invariant" "all 1 outer tests passed.\nall 1 inner tests passed."

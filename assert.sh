@@ -92,7 +92,7 @@ assert() {
     [[ -n "$DISCOVERONLY" ]] && return
     # printf required for formatting
     printf -v expected "x${2:-}" # x required to overwrite older results
-    result="$(eval $1 <<< ${3:-})"
+    result="$(eval 2>/dev/null $1 <<< ${3:-})"
     # Note: $expected is already decorated
     if [[ "x$result" == "$expected" ]]; then
         [[ -n "$DEBUG" ]] && echo -n .
