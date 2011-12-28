@@ -4,7 +4,7 @@
 
 **assert.sh** is test-driven development in the Bourne again shell.
 
-:Version: 1.0
+:Version: 1.0.1
 :Author: Robert Lehmann
 :License: LGPLv3
 
