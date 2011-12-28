@@ -49,9 +49,15 @@ assert "_clean; assert less" ""
 assert '_clean; assert "less 2>&1" "Missing filename (\"less --help\" for help)"'
 # bash failures behave just like stderr
 assert "_clean; assert ___invalid" ""
-# tests can be included and settings are not overridden
-# (ie. we don't need to invoke the inner suite with our options)
-assert "bash -c '. assert.sh; assert_raises true; assert_end outer; bash -c \". assert.sh; assert_raises true; assert_end inner\"' tests --invariant" "all 1 outer tests passed.\nall 1 inner tests passed."
+# test suites can be nested and settings are inherited
+# (ie. we don't need to invoke the inner suite with the very same options,
+# namely --invariant)
+assert "_clean; bash -c '
+. assert.sh;
+assert_raises true; assert_end outer;
+bash -c \". assert.sh; assert_raises true; assert_end inner\"
+' '<exec>' --invariant" "all 1 outer tests passed.
+all 1 inner tests passed."  # <exec> is $0
 assert_end output
 
 # commit: fixed output to report all errors, not just the first
