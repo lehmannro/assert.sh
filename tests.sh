@@ -10,6 +10,8 @@ assert_raises "exit 127" 127 ""         # status code expected
 assert "head -1 < $0" "#!/bin/bash"     # redirections
 assert "seq 2" "1\n2"                   # multi-line output expected
 assert_raises 'read a; exit $a' 42 "42" # variables still work
+assert "echo 1;
+echo 2      # ^" "1\n2"                 # semicolon required!
 assert_end demo
 
 _clean() {
