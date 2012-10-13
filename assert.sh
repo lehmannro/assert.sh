@@ -71,7 +71,7 @@ assert_end() {
     [[ -n "$DISCOVERONLY" ]] && echo "collected $tests." && _assert_reset && return
     [[ -n "$DEBUG" ]] && echo
     [[ -z "$INVARIANT" ]] && report_time=" in $(bc \
-        <<< "${tests_endtime%\%N} - ${tests_starttime%\%N}" \
+        <<< "${tests_endtime%.N} - ${tests_starttime%.N}" \
         | sed -e 's/\.\([0-9]\{0,3\}\)[0-9]*/.\1/' -e 's/^\./0./')s" \
         || report_time=
 
