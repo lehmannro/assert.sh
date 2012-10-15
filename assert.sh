@@ -36,10 +36,10 @@ Usage: $0 [options]
 Language-agnostic unit tests for subprocesses.
 
 Options:
-  -v, --verbose    generate output for every individual test
+  -v, --verbose    generate output for every individual test case
   -x, --stop       stop running tests after the first failure
-  -i, --invariant  do not time suites to remain invariant during runs
-  -d, --discover   collect test suites only, don't run any tests
+  -i, --invariant  do not measure timings to remain invariant between runs
+  -d, --discover   collect test suites only, do not run any tests
   -h               show brief usage information and exit
   --help           show this help message and exit
 EOF
