@@ -147,6 +147,6 @@ __ http://code.google.com/p/shunit2/
   A Test Anything Protocol (TAP) producer with an inherently natural-language-
   style API.  Unfortunately it's only of draft quality and decouples the test
   runner from analysis, which does not allow for *assert.sh* features such as
-  ``--collect-only`` and ``--skip``.
+  ``--collect-only`` and ``--stop``.
   
 __ http://testanything.org/wiki/index.php/Tap-functions
