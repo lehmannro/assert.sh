@@ -118,6 +118,10 @@ variable          corresponding option
 Changelog
 =========
 
+1.0.2
+  * Fixed Mac OS compatibility (closes `#3
+    <http://github.com/lehmannro/assert.sh/issues/3>`_).
+
 1.0.1
   * Added support for ``set -u`` environments (closes `#1
     <http://github.com/lehmannro/assert.sh/issues/#issue/1>`_).
