@@ -14,6 +14,7 @@ assert "echo 1;
 echo 2      # ^" "1\n2"                 # semicolon required!
 assert 'echo " * "' " * "               # don't let the shell evaluate arguments
 assert "echo '%s --'" "%s --"           # don't escape user content
+assert "echo \"foo\nbar\"" "foo\nbar"   # interpretation of backslash escape
 assert_end demo
 
 _clean() {
