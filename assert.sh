@@ -88,14 +88,14 @@ assert_end() {
 
 assert() {
     # assert <command> <expected stdout> [stdin]
-    (( tests_ran++ ))
+    tests_ran=$(($tests_ran + 1))
     [[ -n "$DISCOVERONLY" ]] && return
     # printf required for formatting
     printf -v expected "x${2:-}" # x required to overwrite older results
-    result="$(eval 2>/dev/null $1 <<< ${3:-})"
+    result="$(eval 2>/dev/null $1 <<< ${3:-})" || true
     # Note: $expected is already decorated
     if [[ "x$result" == "$expected" ]]; then
-        [[ -n "$DEBUG" ]] && echo -n .
+        [[ -n "$DEBUG" ]] && echo -n . || true
         return
     fi
     [[ -n "$DEBUG" ]] && echo -n X
@@ -105,7 +105,7 @@ assert() {
     failure="expected $expected${_indent}got $result"
     report="test #$tests_ran \"$1${3:+ <<< $3}\" failed:${_indent}$failure"
     tests_errors[$tests_failed]="$report"
-    (( tests_failed++ ))
+    tests_failed=$(($tests_failed + 1))
     if [[ -n "$STOP" ]]; then
         [[ -n "$DEBUG" ]] && echo
         echo "$report"
@@ -116,12 +116,12 @@ assert() {
 assert_raises() {
     # assert_raises <command> <expected code> [stdin]
     (( tests_ran++ ))
-    [[ -n "$DISCOVERONLY" ]] && return
-    (eval $1 <<< ${3:-}) > /dev/null 2>&1
-    status=$?
+    [[ -n "$DISCOVERONLY" ]] && return || true
+    status=0
+    (eval $1 <<< ${3:-}) > /dev/null 2>&1 || status=$?
     expected=${2:-0}
     if [[ "$status" -eq "$expected" ]]; then
-        [[ -n "$DEBUG" ]] && echo -n .
+        [[ -n "$DEBUG" ]] && echo -n . || true
         return
     fi
     [[ -n "$DEBUG" ]] && echo -n X
