@@ -154,3 +154,9 @@ __ http://code.google.com/p/shunit2/
   ``--collect-only`` and ``--stop``.
 
 __ http://testanything.org/wiki/index.php/Tap-functions
+
+`stub.sh`__
+  Helpers to fake binaries and bash builtins. It supports mocking features such
+  as expecting a certain number of invocations and plays well with *assert.sh*.
+
+__ https://github.com/jimeh/stub.sh
