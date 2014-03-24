@@ -73,6 +73,10 @@ assert 'echo bar' 'bar'; assert_end two\"" 1
 assert_raises "_clean; bash -c \"
 . assert.sh; assert true 'foo'; assert_end one;
 assert 'echo bar' 'bar'; assert_end two; exit 3\"" 3
+# environment variables do not leak
+assert "_clean; x=0; assert 'x=1'; assert_raises 'x=2'; echo \$x" 0
+assert "_clean; x=0; assert 'export x=1'; assert_raises 'export x=2';
+echo \$x" 0
 assert_end interaction
 
 # commit: fixed output to report all errors, not just the first
