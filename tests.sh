@@ -38,7 +38,7 @@ assert "_clean DEBUG=1; assert_raises false; assert_end" \
 assert "_clean DISCOVERONLY=1; assert true; assert false; assert_end" \
 "collected 2 tests."
 # stop immediately on failure (-x)
-assert "_clean STOP=1 assert_raises false; assert_end" \
+assert "_clean STOP=1; assert_raises false; assert_end" \
 'test #1 "false" failed:\n\tprogram terminated with code 1 instead of 0'
 # runtime statistics (omission of -i)
 assert_raises "_clean INVARIANT=;
