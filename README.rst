@@ -100,6 +100,7 @@ See ``assert.sh --help`` for command line options on test runners.
                    test output.
   -d, --discover   Collect test suites and number of tests only; don't run any
                    tests.
+  -c, --continue   Do not modify exit code depending on overall suite status.
   -h               Show brief usage information and exit.
   --help           Show usage manual and exit.
 
@@ -113,6 +114,7 @@ variable          corresponding option
 ``$STOP``         ``--stop``
 ``$INVARIANT``    ``--invariant``
 ``$DISCOVERONLY`` ``--discover-only``
+``$CONTINUE``     ``--continue``
 ================= ====================
 
 Changelog

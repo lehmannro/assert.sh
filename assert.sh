@@ -21,13 +21,16 @@ export DISCOVERONLY=${DISCOVERONLY:-}
 export DEBUG=${DEBUG:-}
 export STOP=${STOP:-}
 export INVARIANT=${INVARIANT:-}
+export CONTINUE=${CONTINUE:-}
 
-args="$(getopt -n "$0" -l verbose,help,stop,discover,invariant vhxdi $*)" \
+args="$(getopt -n "$0" -l \
+    verbose,help,stop,discover,invariant,continue vhxdic $*)" \
 || exit -1
 for arg in $args; do
     case "$arg" in
         -h)
-            echo "$0 [-vxid] [--verbose] [--stop] [--invariant] [--discover]"
+            echo "$0 [-vxidc]" \
+                "[--verbose] [--stop] [--invariant] [--discover] [--continue]"
             echo "`sed 's/./ /g' <<< "$0"` [-h] [--help]"
             exit 0;;
         --help)
@@ -40,6 +43,7 @@ Options:
   -x, --stop       stop running tests after the first failure
   -i, --invariant  do not measure timings to remain invariant between runs
   -d, --discover   collect test suites only, do not run any tests
+  -c, --continue   do not modify exit code to test suite status
   -h               show brief usage information and exit
   --help           show this help message and exit
 EOF
@@ -52,6 +56,8 @@ EOF
             INVARIANT=1;;
         -d|--discover)
             DISCOVERONLY=1;;
+        -c|--continue)
+            CONTINUE=1;;
     esac
 done
 
@@ -141,6 +147,6 @@ _assert_reset
 tests_suite_status=0
 _assert_cleanup() {
     local status=$?
-    [[ $status -eq 0 ]] && exit $tests_suite_status
+    [[ $status -eq 0 && -z $CONTINUE ]] && exit $tests_suite_status
 }
 trap _assert_cleanup EXIT

@@ -16,7 +16,7 @@ assert_end demo
 
 _clean() {
     _assert_reset # reset state
-    DEBUG= STOP= INVARIANT=1 DISCOVERONLY= # reset flags
+    DEBUG= STOP= INVARIANT=1 DISCOVERONLY= CONTINUE= # reset flags
     eval $* # read new flags
 }
 
@@ -67,6 +67,10 @@ assert 'echo bar' 'bar'; assert_end two\"" 0
 assert_raises "_clean; bash -c \"
 . assert.sh; assert true 'foo'; assert_end one;
 assert 'echo bar' 'bar'; assert_end two\"" 1
+# ..but do not override it
+assert_raises "_clean; bash -c \"
+. assert.sh; assert true 'foo'; assert_end one;
+assert 'echo bar' 'bar'; assert_end two; exit 3\"" 3
 assert_end output
 
 # commit: fixed output to report all errors, not just the first
