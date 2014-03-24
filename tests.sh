@@ -60,6 +60,13 @@ assert_raises true; assert_end outer;
 bash -c \". assert.sh; assert_raises true; assert_end inner\"
 ' '<exec>' --invariant" "all 1 outer tests passed.
 all 1 inner tests passed."  # <exec> is $0
+# set the correct exit status
+assert_raises "_clean; bash -c \"
+. assert.sh; assert true ''; assert_end one;
+assert 'echo bar' 'bar'; assert_end two\"" 0
+assert_raises "_clean; bash -c \"
+. assert.sh; assert true 'foo'; assert_end one;
+assert 'echo bar' 'bar'; assert_end two\"" 1
 assert_end output
 
 # commit: fixed output to report all errors, not just the first

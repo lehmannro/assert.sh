@@ -82,6 +82,7 @@ assert_end() {
         echo "$tests_failed of $tests failed$report_time."
     fi
     tests_failed_previous=$tests_failed
+    [[ $tests_failed -gt 0 ]] && tests_suite_status=1
     _assert_reset
     return $tests_failed_previous
 }
@@ -137,3 +138,9 @@ assert_raises() {
 }
 
 _assert_reset
+tests_suite_status=0
+_assert_cleanup() {
+    local status=$?
+    [[ $status -eq 0 ]] && exit $tests_suite_status
+}
+trap _assert_cleanup EXIT
