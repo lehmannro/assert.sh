@@ -139,9 +139,10 @@ _assert_fail() {
 }
 
 _assert_reset
-tests_suite_status=0
+: ${tests_suite_status:=0}  # remember if any of the tests failed so far
 _assert_cleanup() {
     local status=$?
+    # modify exit code if it's not already non-zero
     [[ $status -eq 0 && -z $CONTINUE ]] && exit $tests_suite_status
 }
 trap _assert_cleanup EXIT
