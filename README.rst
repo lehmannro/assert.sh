@@ -11,6 +11,9 @@
                <http://www.gnu.org/software/bc/manual/bc.html>`_
                (installed on all POSIX-compliant systems)
 
+.. image:: https://travis-ci.org/lehmannro/assert.sh.svg?branch=master
+   :target: https://travis-ci.org/lehmannro/assert.sh
+
 Example
 =======
 
