@@ -28,6 +28,8 @@ assert "_clean; assert 'seq 1'; assert_end" \
 'test #1 "seq 1" failed:\n\texpected nothing\n\tgot "1"\n1 of 1 tests failed.'
 assert "_clean; assert true '1'; assert_end" \
 'test #1 "true" failed:\n\texpected "1"\n\tgot nothing\n1 of 1 tests failed.'
+assert "_clean; assert 'true' 'foo' 'bar'; assert_end" \
+'test #1 "true <<< bar" failed:\n\texpected "foo"\n\tgot nothing\n1 of 1 tests failed.'
 # debug output (-v)
 assert "_clean DEBUG=1; assert true; assert_end" \
 ".\nall 1 tests passed."
