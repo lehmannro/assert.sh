@@ -105,19 +105,10 @@ assert() {
         [[ -n "$DEBUG" ]] && echo -n .
         return
     fi
-    [[ -n "$DEBUG" ]] && echo -n X
     result="$(sed -e :a -e '$!N;s/\n/\\n/;ta' <<< "$result")"
     [[ -z "$result" ]] && result="nothing" || result="\"$result\""
     [[ -z "$2" ]] && expected="nothing" || expected="\"$2\""
-    failure="expected $expected${_indent}got $result"
-    report="test #$tests_ran \"$1${3:+ <<< $3}\" failed:${_indent}$failure"
-    tests_errors[$tests_failed]="$report"
-    (( tests_failed++ ))
-    if [[ -n "$STOP" ]]; then
-        [[ -n "$DEBUG" ]] && echo
-        echo "$report"
-        exit 1
-    fi
+    _assert_fail "expected $expected${_indent}got $result" "$1" "$3"
 }
 
 assert_raises() {
@@ -131,16 +122,20 @@ assert_raises() {
         [[ -n "$DEBUG" ]] && echo -n .
         return
     fi
+    _assert_fail "program terminated with code $status instead of $expected" "$1" "$3"
+}
+
+_assert_fail() {
+    # _assert_fail <failure> <command> <stdin>
     [[ -n "$DEBUG" ]] && echo -n X
-    failure="program terminated with code $status instead of $expected"
-    report="test #$tests_ran \"$1${3:+ <<< $3}\" failed:${_indent}$failure"
-    tests_errors[$tests_failed]="$report"
-    (( tests_failed++ ))
+    report="test #$tests_ran \"$2${3:+ <<< $3}\" failed:${_indent}$1"
     if [[ -n "$STOP" ]]; then
         [[ -n "$DEBUG" ]] && echo
         echo "$report"
         exit 1
     fi
+    tests_errors[$tests_failed]="$report"
+    (( tests_failed++ ))
 }
 
 _assert_reset
