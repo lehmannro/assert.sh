@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 . assert.sh
 
 assert "echo"                           # no output expected

@@ -95,14 +95,14 @@ assert_end() {
 
 assert() {
     # assert <command> <expected stdout> [stdin]
-    (( tests_ran++ ))
-    [[ -n "$DISCOVERONLY" ]] && return
+    (( tests_ran++ )) || :
+    [[ -n "$DISCOVERONLY" ]] && return || true
     # printf required for formatting
     printf -v expected "x${2:-}" # x required to overwrite older results
-    result="$(eval 2>/dev/null $1 <<< ${3:-})"
+    result="$(eval 2>/dev/null $1 <<< ${3:-})" || true
     # Note: $expected is already decorated
     if [[ "x$result" == "$expected" ]]; then
-        [[ -n "$DEBUG" ]] && echo -n .
+        [[ -n "$DEBUG" ]] && echo -n . || true
         return
     fi
     result="$(sed -e :a -e '$!N;s/\n/\\n/;ta' <<< "$result")"
@@ -113,13 +113,13 @@ assert() {
 
 assert_raises() {
     # assert_raises <command> <expected code> [stdin]
-    (( tests_ran++ ))
-    [[ -n "$DISCOVERONLY" ]] && return
-    (eval $1 <<< ${3:-}) > /dev/null 2>&1
-    status=$?
+    (( tests_ran++ )) || :
+    [[ -n "$DISCOVERONLY" ]] && return || true
+    status=0
+    (eval $1 <<< ${3:-}) > /dev/null 2>&1 || status=$?
     expected=${2:-0}
     if [[ "$status" -eq "$expected" ]]; then
-        [[ -n "$DEBUG" ]] && echo -n .
+        [[ -n "$DEBUG" ]] && echo -n . || true
         return
     fi
     _assert_fail "program terminated with code $status instead of $expected" "$1" "$3"
@@ -135,7 +135,7 @@ _assert_fail() {
         exit 1
     fi
     tests_errors[$tests_failed]="$report"
-    (( tests_failed++ ))
+    (( tests_failed++ )) || :
 }
 
 _assert_reset
