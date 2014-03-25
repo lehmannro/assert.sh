@@ -7,6 +7,9 @@
 :Version: 1.0.2
 :Author: Robert Lehmann
 :License: LGPLv3
+:Requirements: `bc -- an arbitrary precision calculator language
+               <http://www.gnu.org/software/bc/manual/bc.html>`_
+               (installed on all POSIX-compliant systems)
 
 Example
 =======
