@@ -126,13 +126,19 @@ variable          corresponding option
 Changelog
 =========
 
+master
+  * Added support for ``set -e`` environments (closes `#6
+    <https://github.com/lehmannro/assert.sh/pull/6>`_, thanks David Schoen.)
+  * Modified exit code automatically in case *any* test failed in the suite.
+  * Added ``--continue`` flag to avoid tinkering with the exit code.
+
 1.0.2
   * Fixed Mac OS compatibility (closes `#3
-    <http://github.com/lehmannro/assert.sh/issues/3>`_).
+    <https://github.com/lehmannro/assert.sh/issues/3>`_.)
 
 1.0.1
   * Added support for ``set -u`` environments (closes `#1
-    <http://github.com/lehmannro/assert.sh/issues/1>`_).
+    <https://github.com/lehmannro/assert.sh/issues/1>`_.)
   * Fixed several leaks of stderr.
   * Fixed propagation of options to nested test suites.
 
