@@ -79,8 +79,11 @@ assert_end() {
     tests="$tests_ran ${*:+$* }tests"
     [[ -n "$DISCOVERONLY" ]] && echo "collected $tests." && _assert_reset && return
     [[ -n "$DEBUG" ]] && echo
+    # to get report_time split tests_time on 2 substrings:
+    #   ${tests_time:0:${#tests_time}-9} - seconds
+    #   ${tests_time:${#tests_time}-9:3} - miliseconds
     [[ -z "$INVARIANT" ]] \
-        && report_time=" in ${tests_time:0:${#tests_time}-9}.${tests_time:${#tests_time}-9:${#tests_time}-7}s" \
+        && report_time=" in ${tests_time:0:${#tests_time}-9}.${tests_time:${#tests_time}-9:3}s" \
         || report_time=
 
     if [[ "$tests_failed" -eq 0 ]]; then
