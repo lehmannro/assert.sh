@@ -81,7 +81,7 @@ assert_end() {
     [[ -n "$DEBUG" ]] && echo
     # to get report_time split tests_time on 2 substrings:
     #   ${tests_time:0:${#tests_time}-9} - seconds
-    #   ${tests_time:${#tests_time}-9:3} - miliseconds
+    #   ${tests_time:${#tests_time}-9:3} - milliseconds
     [[ -z "$INVARIANT" ]] \
         && report_time=" in ${tests_time:0:${#tests_time}-9}.${tests_time:${#tests_time}-9:3}s" \
         || report_time=
