@@ -61,7 +61,7 @@ EOF
     esac
 done
 
-printf -v _indent "\n\t" # local format helper
+_indent=$'\n\t' # local format helper
 
 _assert_reset() {
     tests_ran=0
@@ -96,13 +96,13 @@ assert_end() {
 assert() {
     # assert <command> <expected stdout> [stdin]
     (( tests_ran++ )) || :
-    [[ -n "$DISCOVERONLY" ]] && return || true
+    [[ -z "$DISCOVERONLY" ]] || return
     # printf required for formatting
     printf -v expected "x${2:-}" # x required to overwrite older results
     result="$(eval 2>/dev/null $1 <<< ${3:-})" || true
     # Note: $expected is already decorated
     if [[ "x$result" == "$expected" ]]; then
-        [[ -n "$DEBUG" ]] && echo -n . || true
+        [[ -z "$DEBUG" ]] || echo -n .
         return
     fi
     result="$(sed -e :a -e '$!N;s/\n/\\n/;ta' <<< "$result")"
@@ -114,12 +114,12 @@ assert() {
 assert_raises() {
     # assert_raises <command> <expected code> [stdin]
     (( tests_ran++ )) || :
-    [[ -n "$DISCOVERONLY" ]] && return || true
+    [[ -z "$DISCOVERONLY" ]] || return
     status=0
     (eval $1 <<< ${3:-}) > /dev/null 2>&1 || status=$?
     expected=${2:-0}
     if [[ "$status" -eq "$expected" ]]; then
-        [[ -n "$DEBUG" ]] && echo -n . || true
+        [[ -z "$DEBUG" ]] || echo -n .
         return
     fi
     _assert_fail "program terminated with code $status instead of $expected" "$1" "$3"
