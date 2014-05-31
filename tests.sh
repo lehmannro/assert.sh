@@ -81,6 +81,10 @@ assert 'echo bar' 'bar'; assert_end two; exit 3\"" 3
 assert "_clean; x=0; assert 'x=1'; assert_raises 'x=2'; echo \$x" 0
 assert "_clean; x=0; assert 'export x=1'; assert_raises 'export x=2';
 echo \$x" 0
+# options do not leak
+assert_raises "set +e"
+assert_raises "shopt -o errexit"
+
 assert_end interaction
 
 # commit: fixed output to report all errors, not just the first
