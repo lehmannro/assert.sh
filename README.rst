@@ -39,7 +39,7 @@ without any extra hassle::
   all 4 examples tests passed in 0.014s.
 
 Watch out to have ``tests.sh`` executable (``chmod +x tests.sh``), otherwise
-you need to invoke it with ``bash tests.sh``
+you need to invoke it with ``bash tests.sh``.
 
 Now, we will add a failing test case to our suite::
 
