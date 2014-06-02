@@ -56,6 +56,12 @@ When run, the output is::
           program terminated with code 127 instead of 128
   1 of 5 examples tests failed in 0.019s.
 
+The overall status code is 1 (except if you modified the exit code manually)::
+
+  $ bash tests.sh
+  ...
+  $ echo $?
+  1
 
 Features
 ========
@@ -65,6 +71,7 @@ Features
 + test grouping in individual suites
 + time benchmarks with real-time display of test progress
 + run all tests, stop on first failure, or collect numbers only
++ automatically set the exit status of the test script
 
 Use case
 ========

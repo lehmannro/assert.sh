@@ -47,10 +47,10 @@ assert "_clean STOP=1; assert_raises false; assert_end" \
 # runtime statistics (omission of -i)
 assert_raises "_clean INVARIANT=;
 assert_end | egrep 'all 0 tests passed in ([0-9]|[0-9].[0-9]{3})s'"
+# always exit successfully (--continue)
+assert_raises "bash -c '. assert.sh; assert_raises false; assert_end' '' --continue" 0
 assert_end output
 
-# assert_end exit code is the number of failures
-assert_raises "_clean; assert_raises false; assert_raises false; assert_end" 2
 # stderr should NOT leak if ignored
 assert "_clean; assert less" ""
 # stderr should be redirectable though

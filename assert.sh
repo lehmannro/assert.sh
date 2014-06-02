@@ -90,7 +90,6 @@ assert_end() {
     tests_failed_previous=$tests_failed
     [[ $tests_failed -gt 0 ]] && tests_suite_status=1
     _assert_reset
-    return $tests_failed_previous
 }
 
 assert() {
