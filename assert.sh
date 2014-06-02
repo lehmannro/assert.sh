@@ -97,11 +97,9 @@ assert() {
     # assert <command> <expected stdout> [stdin]
     (( tests_ran++ )) || :
     [[ -z "$DISCOVERONLY" ]] || return
-    # printf required for formatting
-    printf -v expected "x${2:-}" # x required to overwrite older results
+    expected=$(echo -ne "${2:-}")
     result="$(eval 2>/dev/null $1 <<< ${3:-})" || true
-    # Note: $expected is already decorated
-    if [[ "x$result" == "$expected" ]]; then
+    if [[ "$result" == "$expected" ]]; then
         [[ -z "$DEBUG" ]] || echo -n .
         return
     fi

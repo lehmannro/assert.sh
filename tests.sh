@@ -132,4 +132,6 @@ _clean INVARIANT=;
 assert date 20.N;
 _date=22;
 assert_end;" "all 1 tests passed in 2s."
+# commit: supported formatting codes
+assert "echo %s" "%s"
 assert_end regression
