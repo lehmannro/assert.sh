@@ -122,4 +122,14 @@ test #1 "false" failed:
 # issue 1: assert.sh: line 87: DISCOVERONLY: unbound variable
 assert "_clean; set -u; assert_raises true; assert true; assert_end" \
 "all 2 tests passed."
+# issue 3: Not working on Mac OS X 10.7.5
+assert "
+_date=20;
+date() {
+echo \$_date.N;
+};
+_clean INVARIANT=;
+assert date 20.N;
+_date=22;
+assert_end;" "all 1 tests passed in 2s."
 assert_end regression
