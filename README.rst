@@ -169,6 +169,14 @@ __ http://code.google.com/p/shunit2/
 
 __ http://testanything.org/wiki/index.php/Tap-functions
 
+`bats`__
+
+  Another TAP producer with syntactic sugar.  It depends on ``errexit``
+  environments (set -e) to run its tests such that *"each line is an assertion
+  of truth."*
+
+__ https://github.com/sstephenson/bats
+
 `stub.sh`__
   Helpers to fake binaries and bash builtins. It supports mocking features such
   as expecting a certain number of invocations and plays well with *assert.sh*.
