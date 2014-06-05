@@ -47,6 +47,13 @@ assert "_clean STOP=1; assert_raises false; assert_end" \
 # runtime statistics (omission of -i)
 assert_raises "_clean INVARIANT=;
 assert_end | egrep 'all 0 tests passed in ([0-9]|[0-9].[0-9]{3})s'"
+# date with no nanosecond support
+date() {         # date mock
+    echo "123N"
+}
+assert '_clean DEBUG=1 INVARIANT=; tests_starttime="0N"; assert_end' \
+       '\nall 0 tests passed in 123.000s.'
+unset -f date  # bring back original date
 assert_end output
 
 # assert_end exit code is the number of failures
