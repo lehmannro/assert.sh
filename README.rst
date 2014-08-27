@@ -89,8 +89,8 @@ Reference
 + ``assert <command> [stdout] [stdin]``
 
   Check for an expected output when running your command. `stdout` supports all
-  control sequences printf(1) interprets, eg. ``\n`` for a newline. The default
-  `stdout` is assumed to be empty.
+  control sequences ``echo -e`` interprets, eg. ``\n`` for a newline. The
+  default `stdout` is assumed to be empty.
 
 + ``assert_raises <command> [exitcode] [stdin]``
 
