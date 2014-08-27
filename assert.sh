@@ -135,6 +135,34 @@ _assert_fail() {
     (( tests_failed++ )) || :
 }
 
+skip() {
+    # skip  (no arguments)
+    shopt -q extdebug && tests_extdebug=0 || tests_extdebug=1
+    shopt -q -o errexit && tests_errexit=0 || tests_errexit=1
+    # enable extdebug so returning 1 in a DEBUG trap handler skips next command
+    shopt -s extdebug
+    # disable errexit (set -e) so we can safely return 1 without causing exit
+    set +o errexit
+    tests_trapped=0
+    trap _skip DEBUG
+}
+_skip() {
+    if [[ $tests_trapped -eq 0 ]]; then
+        # DEBUG trap for command we want to skip.  Do not remove the handler
+        # yet because *after* the command we need to reset extdebug/errexit (in
+        # another DEBUG trap.)
+        tests_trapped=1
+        [[ -z "$DEBUG" ]] || echo -n s
+        return 1
+    else
+        trap - DEBUG
+        [[ $tests_extdebug -eq 0 ]] || shopt -u extdebug
+        [[ $tests_errexit -eq 1 ]] || set -o errexit
+        return 0
+    fi
+}
+
+
 _assert_reset
 : ${tests_suite_status:=0}  # remember if any of the tests failed so far
 _assert_cleanup() {

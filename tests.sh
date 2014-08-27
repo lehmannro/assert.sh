@@ -49,6 +49,9 @@ assert_raises "_clean INVARIANT=;
 assert_end | egrep 'all 0 tests passed in ([0-9]|[0-9].[0-9]{3})s'"
 # always exit successfully (--continue)
 assert_raises "bash -c '. assert.sh; assert_raises false; assert_end' '' --continue" 0
+# skip
+assert "_clean; skip; assert_raises false; assert_raises true; assert_end" \
+"all 1 tests passed."
 assert_end output
 
 # stderr should NOT leak if ignored
@@ -84,6 +87,11 @@ echo \$x" 0
 # options do not leak
 assert_raises "set +e"
 assert_raises "shopt -o errexit"
+# skip properly resets all options
+assert_raises "_clean; set +e; skip; assert_raises false; shopt -o errexit" 1
+assert_raises "_clean; set -e; skip; assert_raises false; shopt -o errexit"
+assert_raises "_clean; shopt -u extdebug; skip; assert_raises false; shopt extdebug" 1
+assert_raises "_clean; shopt -s extdebug; skip; assert_raises false; shopt extdebug"
 
 assert_end interaction
 
