@@ -152,6 +152,13 @@ master
 Related projects
 ================
 
+`Advanced Bash-Scripting Guide`__
+  An in-depth exploration of the art of shell scripting by The Linux
+  Documentation Project proposes a mechanism inspired by C, similar to
+  *assert.sh*.
+
+__ http://www.tldp.org/LDP/abs/html/debugging.html
+
 `ShUnit`__
   ShUnit is a testing framework of the xUnit family for Bourne derived shells.
   It is quite feature-rich but requires a whole lot of boilerplate to write a
