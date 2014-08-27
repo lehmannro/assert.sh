@@ -135,6 +135,13 @@ _assert_fail() {
     (( tests_failed++ )) || :
 }
 
+skip_if() {
+    # skip_if <command ..>
+    (eval $@) > /dev/null 2>&1 && status=0 || status=$?
+    [[ "$status" -eq 0 ]] || return
+    skip
+}
+
 skip() {
     # skip  (no arguments)
     shopt -q extdebug && tests_extdebug=0 || tests_extdebug=1

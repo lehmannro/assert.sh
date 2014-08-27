@@ -52,6 +52,17 @@ assert_raises "bash -c '. assert.sh; assert_raises false; assert_end' '' --conti
 # skip
 assert "_clean; skip; assert_raises false; assert_raises true; assert_end" \
 "all 1 tests passed."
+# conditional skip
+assert "_clean; skip_if true; assert_raises false; assert_end;" \
+"all 0 tests passed."
+assert "_clean; skip_if false; assert_raises true; assert_end;" \
+"all 1 tests passed."
+assert "_clean; skip_if bash -c 'exit 1'; assert_raises false; assert_end;" \
+"all 0 tests passed."
+# subshells and pipes can be used in skip as well (albeit escaped)
+assert "_clean; skip_if 'cat /etc/passwd | grep \$(echo \$USER)';
+assert_raises false; assert_end;" \
+"all 0 tests passed."
 assert_end output
 
 # stderr should NOT leak if ignored
