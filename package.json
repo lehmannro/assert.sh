@@ -1,0 +1,8 @@
+{
+  "name": "assert",
+  "version": "v1.0.2",
+  "description": "bash unit testing framework",
+  "scripts": [ "assert.sh" ],
+  "install": "chmod +x assert.sh && install assert.sh ${PREFIX:-/usr/local}/bin/assert"
+}
+
