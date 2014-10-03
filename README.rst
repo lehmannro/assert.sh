@@ -72,6 +72,7 @@ Features
 + time benchmarks with real-time display of test progress
 + run all tests, stop on first failure, or collect numbers only
 + automatically set the exit status of the test script
++ skip individual tests
 
 Use case
 ========
@@ -100,6 +101,18 @@ Reference
 + ``assert_end [suite]``
 
   Finalize a test suite and print statistics.
+
++ ``skip``
+
+  Unconditionally skip the following test case.  The skipped test case is
+  *exempt* from any test diagnostics (ie., not accounted for in the total
+  number of tests.)
+
++ ``skip_if <command>``
+
+  Skip the following test case if `command` exits successfully.  (``skip``
+  disclaimer applies.)  Use this if you want to run a test only if some
+  precondition is met, eg. the test needs root privileges or network access.
 
 Command line options
 --------------------
@@ -134,6 +147,7 @@ Changelog
 =========
 
 master
+  * Added ``skip`` and ``skip_if`` commands.
   * Added support for ``set -e`` environments (closes `#6
     <https://github.com/lehmannro/assert.sh/pull/6>`_, thanks David Schoen.)
   * Modified exit code automatically in case *any* test failed in the suite.
