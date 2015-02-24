@@ -67,18 +67,24 @@ _assert_reset() {
     tests_ran=0
     tests_failed=0
     tests_errors=()
-    tests_starttime="$(date +%s.%N)" # seconds_since_epoch.nanoseconds
+    tests_starttime="$(date +%s%N)" # nanoseconds_since_epoch
 }
 
 assert_end() {
     # assert_end [suite ..]
-    tests_endtime="$(date +%s.%N)"
+    tests_endtime="$(date +%s%N)"
+    # required visible decimal place for seconds (leading zeros if needed)
+    local tests_time="$( \
+        printf "%010d" "$(( ${tests_endtime/%N/000000000} 
+                            - ${tests_starttime/%N/000000000} ))")"  # in ns
     tests="$tests_ran ${*:+$* }tests"
     [[ -n "$DISCOVERONLY" ]] && echo "collected $tests." && _assert_reset && return
     [[ -n "$DEBUG" ]] && echo
-    [[ -z "$INVARIANT" ]] && report_time=" in $(bc \
-        <<< "${tests_endtime%.N} - ${tests_starttime%.N}" \
-        | sed -e 's/\.\([0-9]\{0,3\}\)[0-9]*/.\1/' -e 's/^\./0./')s" \
+    # to get report_time split tests_time on 2 substrings:
+    #   ${tests_time:0:${#tests_time}-9} - seconds
+    #   ${tests_time:${#tests_time}-9:3} - milliseconds
+    [[ -z "$INVARIANT" ]] \
+        && report_time=" in ${tests_time:0:${#tests_time}-9}.${tests_time:${#tests_time}-9:3}s" \
         || report_time=
 
     if [[ "$tests_failed" -eq 0 ]]; then

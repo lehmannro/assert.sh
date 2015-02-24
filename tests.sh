@@ -154,4 +154,11 @@ assert_end;" "all 1 tests passed in 2s."
 # commit: supported formatting codes
 assert "echo %s" "%s"
 assert "echo -n %s | wc -c" "2"
+# date with no nanosecond support
+date() {         # date mock
+    echo "123N"
+}
+assert '_clean DEBUG=1 INVARIANT=; tests_starttime="0N"; assert_end' \
+       '\nall 0 tests passed in 123.000s.'
+unset -f date  # bring back original date
 assert_end regression
