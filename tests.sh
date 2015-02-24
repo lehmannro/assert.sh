@@ -153,4 +153,5 @@ _date=22;
 assert_end;" "all 1 tests passed in 2s."
 # commit: supported formatting codes
 assert "echo %s" "%s"
+assert "echo -n %s | wc -c" "2"
 assert_end regression
