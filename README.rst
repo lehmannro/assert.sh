@@ -11,6 +11,17 @@
 .. image:: https://travis-ci.org/lehmannro/assert.sh.svg?branch=master
    :target: https://travis-ci.org/lehmannro/assert.sh
 
+Install
+=======
+
+::
+
+  ## as a dependency
+  $ bpkg install lehmannro/assert.sh
+  
+  ## or in your path
+  $ bpkg install lehmannro/assert.sh -g
+
 Example
 =======
 
