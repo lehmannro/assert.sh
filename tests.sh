@@ -145,12 +145,12 @@ assert "_clean; set -u; assert_raises true; assert true; assert_end" \
 assert "
 _date=20;
 date() {
-echo \$_date.N;
+echo \${_date}N;
 };
 _clean INVARIANT=;
-assert date 20.N;
+assert date 20N;
 _date=22;
-assert_end;" "all 1 tests passed in 2s."
+assert_end" "all 1 tests passed in 2.000s."
 # commit: supported formatting codes
 assert "echo %s" "%s"
 assert "echo -n %s | wc -c" "2"
