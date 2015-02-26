@@ -11,17 +11,6 @@
 .. image:: https://travis-ci.org/lehmannro/assert.sh.svg?branch=master
    :target: https://travis-ci.org/lehmannro/assert.sh
 
-Install
-=======
-
-::
-
-  ## as a dependency
-  $ bpkg install lehmannro/assert.sh
-  
-  ## or in your path
-  $ bpkg install lehmannro/assert.sh -g
-
 Example
 =======
 
@@ -91,6 +80,34 @@ languages have excellent testing tools, modifying process state (input ``stdin``
 command line arguments ``argv``, environment variables) is awkard in most
 languages. The shell was made to do just that, so why don't run the tests in
 your shell?
+
+Installation
+============
+
+You can easily install the latest release (or any other version)::
+
+  wget https://raw.github.com/lehmannro/assert.sh/v1.0.2/assert.sh
+
+Use the following command to grab a snapshot of the current development
+version::
+
+  wget https://raw.github.com/lehmannro/assert.sh/master/assert.sh
+
+There is no additional build/compile step except for changing permissions
+(``chmod +x``) depending on the way you have chosen to install *assert.sh*.
+
+bpkg
+----
+
+The ``bpkg`` package manager allows you to install *assert.sh* locally::
+
+  bpkg install lehmannro/assert.sh
+
+(Watch out to ``source deps/assert/assert.sh`` instead.)
+
+If you want to install globally, for your whole system, use::
+
+  bpkg install lehmannro/assert.sh -g
 
 Reference
 =========
