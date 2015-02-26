@@ -177,6 +177,10 @@ master
     <https://github.com/lehmannro/assert.sh/pull/6>`_, thanks David Schoen.)
   * Modified exit code automatically in case *any* test failed in the suite.
   * Added ``--continue`` flag to avoid tinkering with the exit code.
+  * Removed ``bc`` dependency (closes `#8
+    <https://github.com/lehmannro/assert.sh/issues/8>`_, thanks Maciej Żok.)
+  * Added installation instructions for `bpkg <http://bpkg.io/>`_ (closes `#9
+    <https://github.com/lehmannro/assert.sh/pull/9>`_, thanks Joseph Werle.)
 
 1.0.2
   * Fixed Mac OS compatibility (closes `#3
