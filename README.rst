@@ -227,7 +227,6 @@ __ http://code.google.com/p/shunit2/
 __ http://testanything.org/wiki/index.php/Tap-functions
 
 `bats`__
-
   Another TAP producer with syntactic sugar.  It depends on ``errexit``
   environments (set -e) to run its tests such that *"each line is an assertion
   of truth."*
