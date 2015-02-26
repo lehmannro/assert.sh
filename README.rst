@@ -4,7 +4,7 @@
 
 **assert.sh** is test-driven development in the Bourne again shell.
 
-:Version: 1.0.2
+:Version: 1.1
 :Author: Robert Lehmann
 :License: LGPLv3
 
@@ -86,7 +86,7 @@ Installation
 
 You can easily install the latest release (or any other version)::
 
-  wget https://raw.github.com/lehmannro/assert.sh/v1.0.2/assert.sh
+  wget https://raw.github.com/lehmannro/assert.sh/v1.1/assert.sh
 
 Use the following command to grab a snapshot of the current development
 version::
@@ -171,7 +171,7 @@ variable          corresponding option
 Changelog
 =========
 
-master
+1.1
   * Added ``skip`` and ``skip_if`` commands.
   * Added support for ``set -e`` environments (closes `#6
     <https://github.com/lehmannro/assert.sh/pull/6>`_, thanks David Schoen.)
