@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 . assert.sh
 
 assert "echo"                           # no output expected
@@ -96,8 +94,9 @@ assert "_clean; x=0; assert 'x=1'; assert_raises 'x=2'; echo \$x" 0
 assert "_clean; x=0; assert 'export x=1'; assert_raises 'export x=2';
 echo \$x" 0
 # options do not leak
-assert_raises "set +e"
-assert_raises "shopt -o errexit"
+assert_raises "shopt -o errexit" 1
+assert_raises "set -e"
+assert_raises "shopt -o errexit" 1
 # skip properly resets all options
 assert_raises "_clean; set +e; skip; assert_raises false; shopt -o errexit" 1
 assert_raises "_clean; set -e; skip; assert_raises false; shopt -o errexit"

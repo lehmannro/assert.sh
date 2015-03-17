@@ -139,6 +139,7 @@ _assert_fail() {
     fi
     tests_errors[$tests_failed]="$report"
     (( tests_failed++ )) || :
+    return 1
 }
 
 skip_if() {
