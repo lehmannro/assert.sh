@@ -160,4 +160,9 @@ date() {         # date mock
 assert '_clean DEBUG=1 INVARIANT=; tests_starttime="0N"; assert_end' \
        '\nall 0 tests passed in 123.000s.'
 unset -f date  # bring back original date
+# commit: Supporting multiline inputs
+# We trim the output from wc as the BSD version (on Mac OS) contains leading spaces
+assert 'echo "this
+is a multiline echo" | wc -l | tr -d "[[:space:]]"' "2"
+assert 'echo -e "this\nis a multiline echo" | wc -l | tr -d "[[:space:]]"' "2"
 assert_end regression

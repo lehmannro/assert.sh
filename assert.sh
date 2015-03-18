@@ -75,7 +75,7 @@ assert_end() {
     tests_endtime="$(date +%s%N)"
     # required visible decimal place for seconds (leading zeros if needed)
     local tests_time="$( \
-        printf "%010d" "$(( ${tests_endtime/%N/000000000} 
+        printf "%010d" "$(( ${tests_endtime/%N/000000000}
                             - ${tests_starttime/%N/000000000} ))")"  # in ns
     tests="$tests_ran ${*:+$* }tests"
     [[ -n "$DISCOVERONLY" ]] && echo "collected $tests." && _assert_reset && return
@@ -103,7 +103,7 @@ assert() {
     (( tests_ran++ )) || :
     [[ -z "$DISCOVERONLY" ]] || return
     expected=$(echo -ne "${2:-}")
-    result="$(eval 2>/dev/null $1 <<< ${3:-})" || true
+    result="$(eval 2>/dev/null "$1" <<< ${3:-})" || true
     if [[ "$result" == "$expected" ]]; then
         [[ -z "$DEBUG" ]] || echo -n .
         return
@@ -119,7 +119,7 @@ assert_raises() {
     (( tests_ran++ )) || :
     [[ -z "$DISCOVERONLY" ]] || return
     status=0
-    (eval $1 <<< ${3:-}) > /dev/null 2>&1 || status=$?
+    (eval "$1" <<< ${3:-}) > /dev/null 2>&1 || status=$?
     expected=${2:-0}
     if [[ "$status" -eq "$expected" ]]; then
         [[ -z "$DEBUG" ]] || echo -n .
