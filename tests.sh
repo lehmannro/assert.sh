@@ -58,7 +58,7 @@ assert "_clean; skip_if false; assert_raises true; assert_end;" \
 assert "_clean; skip_if bash -c 'exit 1'; assert_raises false; assert_end;" \
 "all 0 tests passed."
 # subshells and pipes can be used in skip as well (albeit escaped)
-assert "_clean; skip_if 'cat /etc/passwd | grep \$(echo \$USER)';
+assert "_clean; skip_if 'id | grep \$(echo \$USER)';
 assert_raises false; assert_end;" \
 "all 0 tests passed."
 assert_end output
@@ -152,7 +152,8 @@ _date=22;
 assert_end" "all 1 tests passed in 2.000s."
 # commit: supported formatting codes
 assert "echo %s" "%s"
-assert "echo -n %s | wc -c" "2"
+# We trim the output from wc as the BSD version (on Mac OS) contains leading spaces
+assert "echo -n %s | wc -c | tr -d '[[:space:]]'" "2"
 # date with no nanosecond support
 date() {         # date mock
     echo "123N"
