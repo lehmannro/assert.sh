@@ -94,6 +94,8 @@ assert_end() {
         echo "$tests_failed of $tests failed$report_time."
     fi
     tests_failed_previous=$tests_failed
+    tests_ran_total=$(($tests_ran_total + $tests_ran))
+    tests_failed_total=$(($tests_failed_total + $tests_failed))
     [[ $tests_failed -gt 0 ]] && tests_suite_status=1
     _assert_reset
 }
@@ -179,6 +181,8 @@ _skip() {
 
 _assert_reset
 : ${tests_suite_status:=0}  # remember if any of the tests failed so far
+: ${tests_ran_total:=0}     # remember the total number of tests ran (inc. failures)
+: ${tests_failed_total:=0}  # remember the total number of test failures
 _assert_cleanup() {
     local status=$?
     # modify exit code if it's not already non-zero
