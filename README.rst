@@ -211,7 +211,7 @@ __ http://shunit.sourceforge.net/
 
 `shUnit2`__
   shUnit2 is a modern xUnit-style testing framework. It comes with a bunch of
-  magic to remove unneccessary verbosity. It requires extra care when crafting
+  magic to remove unnecessary verbosity. It requires extra care when crafting
   test cases with many subprocess invocations as you have to fall back to shell
   features to fetch results.  *assert.sh* wraps this functionality out of the
   box.
