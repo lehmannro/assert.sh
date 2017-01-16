@@ -125,7 +125,7 @@ assert_raises() {
         [[ -z "$DEBUG" ]] || echo -n .
         return
     fi
-    _assert_fail "program terminated with code $status instead of $expected" "$1" "$3"
+    _assert_fail "program terminated with code $status instead of $expected" "$1" "${3:-}"
 }
 
 _assert_fail() {
