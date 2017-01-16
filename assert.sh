@@ -111,7 +111,7 @@ assert() {
     result="$(sed -e :a -e '$!N;s/\n/\\n/;ta' <<< "$result")"
     [[ -z "$result" ]] && result="nothing" || result="\"$result\""
     [[ -z "$2" ]] && expected="nothing" || expected="\"$2\""
-    _assert_fail "expected $expected${_indent}got $result" "$1" "$3"
+    _assert_fail "expected $expected${_indent}got $result" "$1" "${3:-}"
 }
 
 assert_raises() {
