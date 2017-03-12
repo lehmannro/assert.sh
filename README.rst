@@ -203,9 +203,9 @@ Related projects
 __ http://www.tldp.org/LDP/abs/html/debugging.html
 
 `bashtest`__
-  Simplest way to write simple bash command/script tests which are based 
-  on text outputs of commands. Tests looks like execution examples. 
-  You write the execution command and the expected output.
+  Tool for run bash command/script tests based on text outputs of commands. 
+  Tests looks like execution examples. You write the execution command and 
+  the expected output.
 
 __ https://github.com/pahaz/bashtest
 
