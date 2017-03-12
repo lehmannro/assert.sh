@@ -202,6 +202,13 @@ Related projects
 
 __ http://www.tldp.org/LDP/abs/html/debugging.html
 
+`bashtest`__
+  Tool for run bash command/script tests based on text outputs of commands. 
+  Tests looks like execution examples. You write the execution command and 
+  the expected output.
+
+__ https://github.com/pahaz/bashtest
+
 `ShUnit`__
   ShUnit is a testing framework of the xUnit family for Bourne derived shells.
   It is quite feature-rich but requires a whole lot of boilerplate to write a
