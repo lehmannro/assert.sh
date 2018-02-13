@@ -103,7 +103,7 @@ assert() {
     (( tests_ran++ )) || :
     [[ -z "$DISCOVERONLY" ]] || return
     expected=$(echo -ne "${2:-}")
-    result="$(eval 2>/dev/null $1 <<< ${3:-})" || true
+    result="$(eval 2>/dev/null "$1" <<< ${3:-})" || true
     if [[ "$result" == "$expected" ]]; then
         [[ -z "$DEBUG" ]] || echo -n .
         return
@@ -119,7 +119,7 @@ assert_raises() {
     (( tests_ran++ )) || :
     [[ -z "$DISCOVERONLY" ]] || return
     status=0
-    (eval $1 <<< ${3:-}) > /dev/null 2>&1 || status=$?
+    (eval "$1" <<< ${3:-}) > /dev/null 2>&1 || status=$?
     expected=${2:-0}
     if [[ "$status" -eq "$expected" ]]; then
         [[ -z "$DEBUG" ]] || echo -n .

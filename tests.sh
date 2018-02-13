@@ -14,6 +14,16 @@ assert "seq 2" "1\n2"                   # multi-line output expected
 assert_raises 'read a; exit $a' 42 "42" # variables still work
 assert "echo 1;
 echo 2      # ^" "1\n2"                 # semicolon required!
+
+# support for multiline command
+MULTILINE=$(cat <<EOF
+# comment
+echo -n "hello "
+echo -n "world"
+EOF
+)
+assert "$MULTILINE" "hello world"                 # output expected
+
 assert_end demo
 
 _clean() {
