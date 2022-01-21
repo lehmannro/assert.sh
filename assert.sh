@@ -1,8 +1,9 @@
 #!/bin/bash
 # assert.sh 1.1 - bash unit testing framework
 # Copyright (C) 2009-2015 Robert Lehmann
+# Copyright (C) 2022 Noriki Takahashi
 #
-# http://github.com/lehmannro/assert.sh
+# http://github.com/nrnrk/assert.sh
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published
@@ -75,7 +76,7 @@ assert_end() {
     tests_endtime="$(date +%s%N)"
     # required visible decimal place for seconds (leading zeros if needed)
     local tests_time="$( \
-        printf "%010d" "$(( ${tests_endtime/%N/000000000} 
+        printf "%010d" "$(( ${tests_endtime/%N/000000000}
                             - ${tests_starttime/%N/000000000} ))")"  # in ns
     tests="$tests_ran ${*:+$* }tests"
     [[ -n "$DISCOVERONLY" ]] && echo "collected $tests." && _assert_reset && return
