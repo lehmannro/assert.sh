@@ -4,12 +4,10 @@
 
 **assert.sh** is test-driven development in the Bourne again shell.
 
-:Version: 1.1
-:Author: Robert Lehmann
-:License: LGPLv3
+This repository is forked from [here](https://raw.github.com/lehmannro/assert.sh).
 
-.. image:: https://travis-ci.org/lehmannro/assert.sh.svg?branch=master
-   :target: https://travis-ci.org/lehmannro/assert.sh
+.. image:: https://github.com/nrnrk/assert.sh/actions/workflows/bash.yml/badge.svg
+   :target: https://github.com/nrnrk/assert.sh/actions
 
 Example
 =======
